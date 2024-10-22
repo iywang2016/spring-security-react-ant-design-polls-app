@@ -1,27 +1,29 @@
 package com.example.polls.payload;
 
+import org.checkerframework.checker.confidential.qual.*;
+
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
     @NotBlank
-    private String usernameOrEmail;
+    private @NonConfidential String usernameOrEmail;
 
     @NotBlank
-    private String password;
+    private @Confidential String password;
 
-    public String getUsernameOrEmail() {
+    public @NonConfidential String getUsernameOrEmail() {
         return usernameOrEmail;
     }
 
-    public void setUsernameOrEmail(String usernameOrEmail) {
+    public void setUsernameOrEmail(@NonConfidential String usernameOrEmail) {
         this.usernameOrEmail = usernameOrEmail;
     }
 
-    public String getPassword() {
+    public @Confidential String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(@Confidential String password) {
         this.password = password;
     }
 }

@@ -9,6 +9,8 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.checkerframework.checker.confidential.qual.*;
+
 @Entity
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
@@ -21,88 +23,88 @@ import java.util.Set;
 public class User extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @NonConfidential private Long id;
 
     @NotBlank
     @Size(max = 40)
-    private String name;
+    @NonConfidential private String name;
 
     @NotBlank
     @Size(max = 15)
-    private String username;
+    @NonConfidential private String username;
 
     @NaturalId
     @NotBlank
     @Size(max = 40)
     @Email
-    private String email;
+    @NonConfidential private String email;
 
     @NotBlank
     @Size(max = 100)
-    private String password;
+    @Confidential private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<@Confidential Role> roles = new HashSet<@Confidential Role>();
 
     public User() {
 
     }
 
-    public User(String name, String username, String email, String password) {
+    public User(@NonConfidential String name, @NonConfidential String username, @NonConfidential String email, @Confidential String password) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
     }
 
-    public Long getId() {
+    public @NonConfidential Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(@NonConfidential Long id) {
         this.id = id;
     }
 
-    public String getUsername() {
+    public @NonConfidential String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(@NonConfidential String username) {
         this.username = username;
     }
 
-    public String getName() {
+    public @NonConfidential String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonConfidential String name) {
         this.name = name;
     }
 
-    public String getEmail() {
+    public @NonConfidential String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(@NonConfidential String email) {
         this.email = email;
     }
 
-    public String getPassword() {
+    public @Confidential String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(@Confidential String password) {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
+    public Set<@Confidential Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Set<@Confidential Role> roles) {
         this.roles = roles;
     }
 }

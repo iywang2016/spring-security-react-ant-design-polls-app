@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import org.checkerframework.checker.confidential.qual.*;
+
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
@@ -19,7 +21,20 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest httpServletRequest,
                          HttpServletResponse httpServletResponse,
                          AuthenticationException e) throws IOException, ServletException {
-        logger.error("Responding with unauthorized error. Message - {}", e.getMessage());
-        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+        String errorMessage = e.getMessage();
+        if (!checkConfidential(errorMessage)) {
+            @SuppressWarnings("confidential")
+            @NonConfidential String nonConfMessage = errorMessage;
+            logger.error("Responding with unauthorized error. Message - {}", nonConfMessage);
+            httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, nonConfMessage);
+        }
+        logger.error("Responding with unauthorized error. Message - {}");
+        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+    }
+
+    private boolean checkConfidential(String s) {
+        // arbitrary processing of message
+        boolean confidential = true;
+        return confidential;
     }
 }

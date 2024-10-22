@@ -11,6 +11,8 @@ import com.example.polls.payload.SignUpRequest;
 import com.example.polls.repository.RoleRepository;
 import com.example.polls.repository.UserRepository;
 import com.example.polls.security.JwtTokenProvider;
+import org.checkerframework.checker.confidential.qual.Confidential;
+import org.checkerframework.checker.confidential.qual.NonConfidential;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.Collections;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -80,12 +83,15 @@ public class AuthController {
         User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
                 signUpRequest.getEmail(), signUpRequest.getPassword());
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        @SuppressWarnings("confidential")
+        @Confidential String pw = passwordEncoder.encode(user.getPassword());
+        user.setPassword(pw);
 
-        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+        @Confidential Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
                 .orElseThrow(() -> new AppException("User Role not set."));
 
-        user.setRoles(Collections.singleton(userRole));
+        Set<@Confidential Role> singleRole = Collections.singleton(userRole);
+        user.setRoles(singleRole);
 
         User result = userRepository.save(user);
 

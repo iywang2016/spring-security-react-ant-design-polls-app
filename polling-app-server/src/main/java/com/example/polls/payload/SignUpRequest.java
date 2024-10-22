@@ -1,54 +1,55 @@
 package com.example.polls.payload;
 
 import javax.validation.constraints.*;
+import org.checkerframework.checker.confidential.qual.*;
 
 public class SignUpRequest {
     @NotBlank
     @Size(min = 4, max = 40)
-    private String name;
+    private @NonConfidential String name;
 
     @NotBlank
     @Size(min = 3, max = 15)
-    private String username;
+    private @NonConfidential String username;
 
     @NotBlank
     @Size(max = 40)
     @Email
-    private String email;
+    private @NonConfidential String email;
 
     @NotBlank
     @Size(min = 6, max = 20)
-    private String password;
+    private @Confidential String password;
 
-    public String getName() {
+    public @NonConfidential String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonConfidential String name) {
         this.name = name;
     }
 
-    public String getUsername() {
+    public @NonConfidential String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(@NonConfidential String username) {
         this.username = username;
     }
 
-    public String getEmail() {
+    public @NonConfidential String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(@NonConfidential String email) {
         this.email = email;
     }
 
-    public String getPassword() {
+    public @Confidential String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(@Confidential String password) {
         this.password = password;
     }
 }
