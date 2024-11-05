@@ -23,7 +23,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                          AuthenticationException e) throws IOException, ServletException {
         String errorMessage = e.getMessage();
         if (!checkConfidential(errorMessage)) {
-            @SuppressWarnings("confidential")
+            @SuppressWarnings("confidential") // true positive
             @NonConfidential String nonConfMessage = errorMessage;
             logger.error("Responding with unauthorized error. Message - {}", nonConfMessage);
             httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, nonConfMessage);

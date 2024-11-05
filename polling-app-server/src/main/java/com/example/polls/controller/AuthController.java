@@ -83,7 +83,7 @@ public class AuthController {
         User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
                 signUpRequest.getEmail(), signUpRequest.getPassword());
 
-        @SuppressWarnings("confidential")
+        @SuppressWarnings("confidential") // force confidential
         @Confidential String pw = passwordEncoder.encode(user.getPassword());
         user.setPassword(pw);
 
