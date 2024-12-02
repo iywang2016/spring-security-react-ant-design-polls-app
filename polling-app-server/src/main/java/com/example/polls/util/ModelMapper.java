@@ -5,6 +5,8 @@ import com.example.polls.model.User;
 import com.example.polls.payload.ChoiceResponse;
 import com.example.polls.payload.PollResponse;
 import com.example.polls.payload.UserSummary;
+import org.checkerframework.checker.confidential.qual.Confidential;
+import org.checkerframework.checker.confidential.qual.PolyConfidential;
 
 import java.time.Instant;
 import java.util.List;

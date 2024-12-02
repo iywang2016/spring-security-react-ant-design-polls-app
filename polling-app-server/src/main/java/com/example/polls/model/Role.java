@@ -1,5 +1,7 @@
 package com.example.polls.model;
 
+import org.checkerframework.checker.confidential.qual.NonConfidential;
+import org.checkerframework.checker.confidential.qual.PolyConfidential;
 import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 
@@ -31,7 +33,7 @@ public class Role {
         this.id = id;
     }
 
-    public RoleName getName() {
+    public @NonConfidential RoleName getName(@PolyConfidential Role this) {
         return name;
     }
 

@@ -2,6 +2,7 @@ package com.example.polls.security;
 
 import com.example.polls.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.checkerframework.checker.confidential.qual.Confidential;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,11 +23,12 @@ public class UserPrincipal implements UserDetails {
     private String email;
 
     @JsonIgnore
+    @Confidential
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String name, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(Long id, String name, String username, String email, @Confidential String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -68,7 +70,8 @@ public class UserPrincipal implements UserDetails {
     }
 
     @Override
-    public String getPassword() {
+    @SuppressWarnings("confidential")
+    public @Confidential String getPassword() {
         return password;
     }
 
