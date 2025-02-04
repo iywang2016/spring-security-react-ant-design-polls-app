@@ -70,7 +70,6 @@ public class UserPrincipal implements UserDetails {
     }
 
     @Override
-    @SuppressWarnings("confidential")
     public @Confidential String getPassword() {
         return password;
     }

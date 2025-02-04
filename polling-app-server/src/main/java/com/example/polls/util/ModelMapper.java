@@ -5,8 +5,7 @@ import com.example.polls.model.User;
 import com.example.polls.payload.ChoiceResponse;
 import com.example.polls.payload.PollResponse;
 import com.example.polls.payload.UserSummary;
-import org.checkerframework.checker.confidential.qual.Confidential;
-import org.checkerframework.checker.confidential.qual.PolyConfidential;
+import org.checkerframework.checker.confidential.qual.NonConfidential;
 
 import java.time.Instant;
 import java.util.List;
@@ -25,7 +24,7 @@ public class ModelMapper {
         pollResponse.setExpired(poll.getExpirationDateTime().isBefore(now));
 
         List<ChoiceResponse> choiceResponses = poll.getChoices().stream().map(choice -> {
-            ChoiceResponse choiceResponse = new ChoiceResponse();
+            @NonConfidential ChoiceResponse choiceResponse = new ChoiceResponse();
             choiceResponse.setId(choice.getId());
             choiceResponse.setText(choice.getText());
 
